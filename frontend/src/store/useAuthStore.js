@@ -24,14 +24,51 @@ export const useAuthStore = create((set) => ({
   signup: async (data) => {
     set({ isSigningUp: true });
     try {
-      const res = axiosInstance.post("/auth/signup", data);
-
-      set({ authUser: res.data });
-      toast.success("Account created successfully");
+      const res = await axiosInstance.post("/auth/signup", data);
+      console.log(res);
+      if (res) {
+        set({ authUser: res.data });
+        toast.success("Account created successfully");
+      }
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+  login: async (data) => {
+    set({ isLoggingIn: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+      toast.success("Logged in successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isLoggingIn: false });
+    }
+  },
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logout Successfully");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response.data.message);
+    }
+  },
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile Updated Successfully");
+    } catch (error) {
+      console.log("error in update profile: ", error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 }));
