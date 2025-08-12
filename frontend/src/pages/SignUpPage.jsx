@@ -93,7 +93,10 @@ const SignUpPage = () => {
                   placeholder="abc@example.com"
                   value={formData.email}
                   onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
+                    setFormData({
+                      ...formData,
+                      email: e.target.value,
+                    })
                   }
                 />
               </div>

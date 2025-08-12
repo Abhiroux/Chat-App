@@ -46,7 +46,7 @@ const Navbar = () => {
           </div>
         </div>
       </header>
-      <div className="h-15"></div> {/* Spacer for fixed header */}
+      {/* <div className="h-15"></div> Spacer for fixed header */}
     </>
   );
 };
